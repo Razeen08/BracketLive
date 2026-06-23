@@ -1,4 +1,4 @@
-import type { BracketRound, Match, Team } from '../types/bracket';
+import type { BracketRound, Team } from '../types/bracket';
 
 export type SimPicks = Record<number, 'home' | 'away'>;
 
