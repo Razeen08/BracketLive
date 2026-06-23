@@ -1,0 +1,68 @@
+.champion-banner {
+  margin: 0 24px 32px;
+  background: linear-gradient(135deg, #1a0f00 0%, #2e1d00 40%, #1a0f00 100%);
+  border: 1px solid var(--gold-500);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow:
+    0 0 40px rgba(201, 168, 76, 0.2),
+    inset 0 1px 0 rgba(201, 168, 76, 0.15);
+  animation: champion-glow 3s ease-in-out infinite;
+}
+
+@keyframes champion-glow {
+  0%, 100% { box-shadow: 0 0 30px rgba(201, 168, 76, 0.15), inset 0 1px 0 rgba(201, 168, 76, 0.1); }
+  50%       { box-shadow: 0 0 60px rgba(201, 168, 76, 0.35), inset 0 1px 0 rgba(201, 168, 76, 0.2); }
+}
+
+.champion-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+.champion-trophy {
+  font-size: 40px;
+  filter: drop-shadow(0 0 10px rgba(201, 168, 76, 0.7));
+}
+
+.champion-info {
+  text-align: center;
+}
+
+.champion-label {
+  font-family: var(--font-condensed);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-500);
+  margin-bottom: 8px;
+}
+
+.champion-team {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.champion-flag {
+  width: 48px;
+  height: 32px;
+  object-fit: cover;
+  border-radius: 3px;
+  border: 2px solid var(--gold-500);
+}
+
+.champion-name {
+  font-family: var(--font-condensed);
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  background: linear-gradient(135deg, var(--gold-400), var(--gold-300));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

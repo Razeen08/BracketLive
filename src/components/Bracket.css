@@ -1,0 +1,88 @@
+.bracket-section {
+  padding: 0 24px;
+}
+
+/* Horizontal scroll wrapper */
+.bracket-scroll {
+  overflow-x: auto;
+  overflow-y: visible;
+  padding-bottom: 16px;
+}
+
+/* All round columns side by side */
+.bracket-body {
+  display: inline-flex;
+  align-items: flex-start;
+  /* gap accommodates connector stubs (2 × connector-w on inner columns) */
+  gap: calc(var(--round-gap) + var(--connector-w) * 2);
+  padding: 8px calc(var(--connector-w) + 4px);
+}
+
+/* ── Round column ───────────────────────────────────────────── */
+.round-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.round-label {
+  font-family: var(--font-condensed);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold-500);
+  margin-bottom: 12px;
+  white-space: nowrap;
+  padding: 3px 10px;
+  border-bottom: 1px solid rgba(201, 168, 76, 0.25);
+}
+
+/* Round body: positioned container for matches */
+.round-body {
+  position: relative;
+  width: var(--card-w);
+  overflow: visible; /* connectors extend beyond the column boundary */
+}
+
+/* ── Match slot ─────────────────────────────────────────────── */
+.match-slot {
+  width: var(--card-w);
+}
+
+/* ── Connectors ─────────────────────────────────────────────── */
+.connector {
+  background: var(--border-light);
+  flex-shrink: 0;
+}
+
+/* Horizontal stubs (position set inline) */
+.connector--h {
+  height: 2px;
+}
+
+/* Vertical connector (position set inline) */
+.connector--v {
+  width: 2px;
+}
+
+/* ── 3rd-place play-off (below Final column) ────────────────── */
+.third-place-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding-top: 40px;
+  width: var(--card-w);
+}
+
+.third-place-col-label {
+  font-family: var(--font-condensed);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  white-space: nowrap;
+}

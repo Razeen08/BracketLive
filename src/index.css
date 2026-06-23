@@ -1,0 +1,79 @@
+/* ── Design tokens ──────────────────────────────────────────── */
+:root {
+  --navy-900: #000d24;
+  --navy-800: #001435;
+  --navy-700: #001d4a;
+  --navy-600: #00245c;
+  --blue-500: #003da5;
+  --blue-400: #1a52b5;
+
+  --gold-500: #c9a84c;
+  --gold-400: #d9bc74;
+  --gold-300: #e8d09c;
+
+  --white: #ffffff;
+  --text-primary: #e8edf5;
+  --text-muted: #7a90b3;
+  --text-dim: #4a5f7a;
+
+  --border: #1a2f54;
+  --border-light: #243a66;
+
+  --live-red: #e63946;
+  --finished-green: #2dc67a;
+
+  --card-bg: #001435;
+  --card-h: 64px;
+  --card-w: 240px;
+  --slot-h: 72px;
+  --connector-w: 20px;
+  --round-gap: 40px;
+
+  --font-main: 'Barlow', system-ui, sans-serif;
+  --font-condensed: 'Barlow Condensed', system-ui, sans-serif;
+}
+
+/* ── Reset ──────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--navy-900);
+  color: var(--text-primary);
+  font-family: var(--font-main);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-family: var(--font-main);
+  cursor: pointer;
+}
+
+img {
+  display: block;
+}
+
+/* ── Scrollbar ──────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--navy-800);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-light);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-500);
+}

@@ -1,0 +1,190 @@
+.match-card {
+  width: var(--card-w);
+  height: var(--card-h);
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: border-color 0.25s, box-shadow 0.25s;
+  flex-shrink: 0;
+}
+
+.match-card:hover {
+  border-color: var(--border-light);
+}
+
+.match-card--live {
+  border-color: var(--live-red);
+  box-shadow: 0 0 12px rgba(230, 57, 70, 0.25);
+  animation: live-pulse 2.5s ease-in-out infinite;
+}
+
+.match-card--finished {
+  border-color: var(--border-light);
+}
+
+@keyframes live-pulse {
+  0%, 100% { box-shadow: 0 0 10px rgba(230, 57, 70, 0.2); }
+  50%       { box-shadow: 0 0 20px rgba(230, 57, 70, 0.45); }
+}
+
+/* Team row */
+.team-row {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 0 9px;
+  gap: 7px;
+  min-width: 0;
+  transition: background 0.2s;
+}
+
+.team-row.winner {
+  background: rgba(201, 168, 76, 0.1);
+}
+.team-row.winner .team-name,
+.team-row.winner .team-score {
+  color: var(--gold-400);
+  font-weight: 700;
+}
+
+.team-row.loser .team-name,
+.team-row.loser .team-score {
+  color: var(--text-dim);
+}
+
+/* Flags */
+.team-flag {
+  width: 22px;
+  height: 15px;
+  border-radius: 2px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.team-flag--tbd {
+  width: 22px;
+  height: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--navy-700);
+  border-radius: 2px;
+  font-size: 10px;
+  color: var(--text-dim);
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+}
+
+.team-flag--label {
+  width: 22px;
+  height: 15px;
+  flex-shrink: 0;
+  border-radius: 2px;
+  background: rgba(255,255,255,0.06);
+  border: 1px dashed rgba(255,255,255,0.15);
+}
+
+.team-flag--text {
+  font-size: 8px;
+  font-weight: 700;
+  color: var(--text-muted);
+  width: 22px;
+  flex-shrink: 0;
+  letter-spacing: 0.02em;
+}
+
+/* Team name */
+.team-name {
+  flex: 1;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.01em;
+}
+
+/* Score */
+.team-score {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  min-width: 20px;
+  text-align: right;
+  font-family: var(--font-condensed);
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+}
+
+/* Divider + badge */
+.match-divider {
+  height: 1px;
+  background: var(--border);
+  position: relative;
+  flex-shrink: 0;
+}
+
+.badge {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 1px 5px;
+  border-radius: 3px;
+  white-space: nowrap;
+  font-family: var(--font-condensed);
+}
+
+.badge--live {
+  background: var(--live-red);
+  color: #fff;
+  animation: blink 1.2s ease-in-out infinite;
+}
+
+.badge--ft {
+  background: rgba(45, 198, 122, 0.15);
+  color: var(--finished-green);
+  border: 1px solid rgba(45, 198, 122, 0.3);
+}
+
+.badge--scheduled {
+  background: transparent;
+  color: var(--text-dim);
+  font-size: 8px;
+  font-weight: 500;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.6; }
+}
+
+/* ── Simulate mode ───────────────────────────────────────── */
+.match-card--simulate {
+  border-color: rgba(45, 122, 58, 0.55);
+}
+
+.team-row--clickable {
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.team-row--clickable:hover {
+  background: rgba(201, 168, 76, 0.12);
+}
+.team-row--clickable:hover .team-name {
+  color: var(--gold-400);
+}
+
+.badge--sim {
+  background: rgba(45, 122, 58, 0.25);
+  color: #4ec66e;
+  border: 1px solid rgba(45, 122, 58, 0.45);
+}
