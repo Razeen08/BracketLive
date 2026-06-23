@@ -48,7 +48,8 @@ export async function fetchKnockoutMatches(): Promise<Match[]> {
     rawMatches = data.matches ?? [];
   } else {
     // Production: read from pre-fetched static file (served by GitHub Pages)
-    const res = await fetch('./data/matches.json');
+    // Cache-bust so browsers always fetch the latest version after each CI deploy
+    const res = await fetch(`./data/matches.json?t=${Date.now()}`);
     if (!res.ok) throw new Error(`Could not load match data (${res.status}). Please refresh.`);
     const data = (await res.json()) as { matches: Match[] };
     rawMatches = data.matches ?? [];
@@ -79,7 +80,7 @@ export async function fetchStandings(): Promise<StandingsMap> {
     const data = (await res.json()) as { standings: GroupStanding[] };
     rawStandings = data.standings ?? [];
   } else {
-    const res = await fetch('./data/standings.json');
+    const res = await fetch(`./data/standings.json?t=${Date.now()}`);
     if (!res.ok) throw new Error(`Could not load standings data (${res.status}). Please refresh.`);
     const data = (await res.json()) as { standings: GroupStanding[] };
     rawStandings = data.standings ?? [];
