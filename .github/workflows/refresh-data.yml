@@ -2,8 +2,8 @@ name: Refresh live data
 
 on:
   schedule:
-    # Every 10 minutes during the tournament
-    - cron: '*/10 * * * *'
+    # Every 5 minutes (GitHub Actions minimum interval)
+    - cron: '*/5 * * * *'
   workflow_dispatch:
 
 permissions:
