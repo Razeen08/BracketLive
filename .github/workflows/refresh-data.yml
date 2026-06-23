@@ -1,8 +1,9 @@
-name: Deploy to GitHub Pages
+name: Refresh live data
 
 on:
-  push:
-    branches: [main]
+  schedule:
+    # Every 10 minutes during the tournament
+    - cron: '*/10 * * * *'
   workflow_dispatch:
 
 permissions:
