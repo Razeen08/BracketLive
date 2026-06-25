@@ -2,6 +2,7 @@ import { useState, useCallback, useMemo } from 'react';
 import { useBracket } from './hooks/useBracket';
 import { useStandings } from './hooks/useStandings';
 import { useGroupMatches } from './hooks/useGroupMatches';
+import { useMeta } from './hooks/useMeta';
 import { Header } from './components/Header';
 import { Bracket } from './components/Bracket';
 import { Champion } from './components/Champion';
@@ -17,7 +18,8 @@ import './App.css';
 export default function App() {
   const { data: standings } = useStandings();
   const { data: groupMatches } = useGroupMatches();
-  const { data, isLoading, isError, error, dataUpdatedAt } = useBracket(standings ?? null);
+  const { data: meta } = useMeta();
+  const { data, isLoading, isError, error } = useBracket(standings ?? null);
 
   // Overlay live match scores onto finalized standings
   const { standings: liveStandings, liveTeamIds, liveScores } = useMemo(
@@ -79,7 +81,7 @@ export default function App() {
   return (
     <div className="app">
       <Header
-        lastUpdated={dataUpdatedAt ? new Date(dataUpdatedAt) : null}
+        lastUpdated={meta?.fetchedAt ? new Date(meta.fetchedAt) : null}
       />
       <SimulateBar
         isActive={simulateMode}

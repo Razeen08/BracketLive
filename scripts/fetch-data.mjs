@@ -52,6 +52,12 @@ async function main() {
   console.log(`  Saved ${standingsData.standings?.length ?? 0} groups.`);
 
   console.log('Done – public/data/ updated.');
+
+  writeFileSync(
+    join(OUT_DIR, 'meta.json'),
+    JSON.stringify({ fetchedAt: new Date().toISOString() }, null, 2),
+    'utf8'
+  );
 }
 
 main().catch((err) => {

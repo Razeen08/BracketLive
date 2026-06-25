@@ -38,6 +38,18 @@ export async function fetchGroupMatches(): Promise<Match[]> {
   return rawMatches.filter((m) => m.stage === 'GROUP_STAGE');
 }
 
+/** Returns the timestamp written by the CI fetch script, or null in dev. */
+export async function fetchMeta(): Promise<{ fetchedAt: string | null }> {
+  if (import.meta.env.DEV) return { fetchedAt: null };
+  try {
+    const res = await fetch(`./data/meta.json?t=${Date.now()}`);
+    if (!res.ok) return { fetchedAt: null };
+    return res.json() as Promise<{ fetchedAt: string | null }>;
+  } catch {
+    return { fetchedAt: null };
+  }
+}
+
 // ── Shared raw match fetcher ──────────────────────────────────
 
 async function fetchAllMatchesRaw(): Promise<Match[]> {
