@@ -2,9 +2,20 @@ name: Refresh live data
 
 on:
   schedule:
-    # Every 10 min, 12pm–2am EDT (= 16:00–06:00 UTC, spans midnight)
-    - cron: '0,10,20,30,40,50 16-23 * * *'
-    - cron: '0,10,20,30,40,50 0-6 * * *'
+    # Every 10 min, 12pm–2am EDT (16:00–06:00 UTC). One entry per minute mark
+    # so GitHub's scheduler is more likely to fire at least one on time.
+    - cron: '0  16-23 * * *'
+    - cron: '10 16-23 * * *'
+    - cron: '20 16-23 * * *'
+    - cron: '30 16-23 * * *'
+    - cron: '40 16-23 * * *'
+    - cron: '50 16-23 * * *'
+    - cron: '0  0-6 * * *'
+    - cron: '10 0-6 * * *'
+    - cron: '20 0-6 * * *'
+    - cron: '30 0-6 * * *'
+    - cron: '40 0-6 * * *'
+    - cron: '50 0-6 * * *'
   workflow_dispatch:
 
 permissions:
