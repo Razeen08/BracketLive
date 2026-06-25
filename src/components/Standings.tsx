@@ -3,6 +3,8 @@ import './Standings.css';
 
 interface Props {
   standings: StandingsMap;
+  liveTeamIds?: Set<number>;
+  liveScores?: Map<number, string>;
 }
 
 /** Returns the 8 best 3rd-place entries sorted by points, GD, GF. */
@@ -20,7 +22,7 @@ function getBest3rdTeams(standings: StandingsMap): Set<number> {
   return new Set(thirds.slice(0, 8).map((e) => e.team.id));
 }
 
-function TeamCell({ entry }: { entry: StandingEntry }) {
+function TeamCell({ entry, isLive, liveScore }: { entry: StandingEntry; isLive?: boolean; liveScore?: string }) {
   return (
     <td className="st-team-cell">
       <img
@@ -31,11 +33,17 @@ function TeamCell({ entry }: { entry: StandingEntry }) {
         onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
       />
       <span className="st-team-name">{entry.team.shortName || entry.team.name}</span>
+      {isLive && (
+        <span className="live-badge" title={liveScore}>
+          <span className="live-dot" />
+          LIVE
+        </span>
+      )}
     </td>
   );
 }
 
-export function Standings({ standings }: Props) {
+export function Standings({ standings, liveTeamIds, liveScores }: Props) {
   const groups = Object.keys(standings).sort();
   const best3rdIds = getBest3rdTeams(standings);
 
@@ -69,15 +77,16 @@ export function Standings({ standings }: Props) {
                 <tbody>
                   {table.map((entry) => {
                     const pos = entry.position;
-                    const isQ2 = pos <= 2;          // auto-qualifies
-                    const isB3 = !isQ2 && best3rdIds.has(entry.team.id); // current best 3rd
+                    const isQ2 = pos <= 2;
+                    const isB3 = !isQ2 && best3rdIds.has(entry.team.id);
+                    const isLive = liveTeamIds?.has(entry.team.id) ?? false;
                     return (
                       <tr
                         key={entry.team.id}
-                        className={isQ2 ? 'row--qualified' : isB3 ? 'row--best3rd' : ''}
+                        className={`${isQ2 ? 'row--qualified' : isB3 ? 'row--best3rd' : ''} ${isLive ? 'row--live' : ''}`}
                       >
                         <td className="st-pos">{pos}</td>
-                        <TeamCell entry={entry} />
+                        <TeamCell entry={entry} isLive={isLive} liveScore={liveScores?.get(entry.team.id)} />
                         <td>{entry.playedGames}</td>
                         <td>{entry.won}</td>
                         <td>{entry.draw}</td>

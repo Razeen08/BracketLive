@@ -1,6 +1,7 @@
 import { useState, useCallback, useMemo } from 'react';
 import { useBracket } from './hooks/useBracket';
 import { useStandings } from './hooks/useStandings';
+import { useGroupMatches } from './hooks/useGroupMatches';
 import { Header } from './components/Header';
 import { Bracket } from './components/Bracket';
 import { Champion } from './components/Champion';
@@ -9,12 +10,22 @@ import { Standings } from './components/Standings';
 import { ThirdPlaceRankings } from './components/ThirdPlaceRankings';
 import { ChampionModal } from './components/ChampionModal';
 import { applySimulation } from './utils/simulation';
+import { computeLiveStandings } from './utils/liveStandings';
 import type { SimPicks } from './utils/simulation';
 import './App.css';
 
 export default function App() {
   const { data: standings } = useStandings();
+  const { data: groupMatches } = useGroupMatches();
   const { data, isLoading, isError, error, dataUpdatedAt } = useBracket(standings ?? null);
+
+  // Overlay live match scores onto finalized standings
+  const { standings: liveStandings, liveTeamIds, liveScores } = useMemo(
+    () => standings && groupMatches
+      ? computeLiveStandings(standings, groupMatches)
+      : { standings: standings ?? {}, liveTeamIds: new Set<number>(), liveScores: new Map<number, string>() },
+    [standings, groupMatches]
+  );
 
   const [simulateMode, setSimulateMode] = useState(false);
   const [simPicks, setSimPicks] = useState<SimPicks>({});
@@ -103,10 +114,10 @@ export default function App() {
               thirdPlace={data.thirdPlace ?? null}
             />
             {standings && Object.keys(standings).length > 0 && (
-              <Standings standings={standings} />
+              <Standings standings={liveStandings} liveTeamIds={liveTeamIds} liveScores={liveScores} />
             )}
             {standings && Object.keys(standings).length > 0 && (
-              <ThirdPlaceRankings standings={standings} />
+              <ThirdPlaceRankings standings={liveStandings} liveTeamIds={liveTeamIds} liveScores={liveScores} />
             )}
           </>
         )}

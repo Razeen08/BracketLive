@@ -92,6 +92,12 @@
   border-bottom: 2px solid rgba(45, 198, 122, 0.4);
 }
 
+/* Live row */
+.tp-row--live {
+  background: rgba(230, 57, 70, 0.06) !important;
+  opacity: 1 !important;
+}
+
 /* GD colours (reuse from Standings) */
 .gd--pos { color: var(--finished-green); }
 .gd--neg { color: var(--live-red); }

@@ -25,8 +25,22 @@ export function normaliseStage(stage: string): string {
 }
 
 export async function fetchKnockoutMatches(): Promise<Match[]> {
-  let rawMatches: Match[];
+  const rawMatches = await fetchAllMatchesRaw();
 
+  return rawMatches
+    .filter((m) => KNOCKOUT_STAGES.has(m.stage))
+    .map((m) => ({ ...m, stage: normaliseStage(m.stage) }));
+}
+
+/** Returns all GROUP_STAGE matches (used for live standings overlay). */
+export async function fetchGroupMatches(): Promise<Match[]> {
+  const rawMatches = await fetchAllMatchesRaw();
+  return rawMatches.filter((m) => m.stage === 'GROUP_STAGE');
+}
+
+// ── Shared raw match fetcher ──────────────────────────────────
+
+async function fetchAllMatchesRaw(): Promise<Match[]> {
   if (import.meta.env.DEV) {
     // Dev: hit the API through the Vite proxy (no CORS)
     const apiKey = import.meta.env.VITE_API_KEY as string | undefined;
@@ -45,19 +59,15 @@ export async function fetchKnockoutMatches(): Promise<Match[]> {
       throw new Error(`API error ${res.status}: ${res.statusText}`);
     }
     const data = (await res.json()) as { matches: Match[] };
-    rawMatches = data.matches ?? [];
+    return data.matches ?? [];
   } else {
     // Production: read from pre-fetched static file (served by GitHub Pages)
     // Cache-bust so browsers always fetch the latest version after each CI deploy
     const res = await fetch(`./data/matches.json?t=${Date.now()}`);
     if (!res.ok) throw new Error(`Could not load match data (${res.status}). Please refresh.`);
     const data = (await res.json()) as { matches: Match[] };
-    rawMatches = data.matches ?? [];
+    return data.matches ?? [];
   }
-
-  return rawMatches
-    .filter((m) => KNOCKOUT_STAGES.has(m.stage))
-    .map((m) => ({ ...m, stage: normaliseStage(m.stage) }));
 }
 
 // ── Group standings ───────────────────────────────────────────

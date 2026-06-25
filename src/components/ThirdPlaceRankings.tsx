@@ -1,8 +1,11 @@
 import type { StandingsMap, StandingEntry } from '../types/standings';
+import './Standings.css';
 import './ThirdPlaceRankings.css';
 
 interface Props {
   standings: StandingsMap;
+  liveTeamIds?: Set<number>;
+  liveScores?: Map<number, string>;
 }
 
 function getAllThirds(standings: StandingsMap): Array<{ group: string; entry: StandingEntry }> {
@@ -20,7 +23,7 @@ function getAllThirds(standings: StandingsMap): Array<{ group: string; entry: St
   return thirds;
 }
 
-export function ThirdPlaceRankings({ standings }: Props) {
+export function ThirdPlaceRankings({ standings, liveTeamIds, liveScores }: Props) {
   const thirds = getAllThirds(standings);
   if (thirds.length === 0) return null;
 
@@ -53,10 +56,12 @@ export function ThirdPlaceRankings({ standings }: Props) {
             {thirds.map(({ group, entry }, idx) => {
               const qualifies = idx < 8;
               const cutoff = idx === 7 && thirds.length > 8;
+              const isLive = liveTeamIds?.has(entry.team.id) ?? false;
+              const liveScore = liveScores?.get(entry.team.id);
               return (
                 <tr
                   key={entry.team.id}
-                  className={`${qualifies ? 'tp-row--qualifies' : 'tp-row--out'} ${cutoff ? 'tp-row--cutoff' : ''}`}
+                  className={`${qualifies ? 'tp-row--qualifies' : 'tp-row--out'} ${cutoff ? 'tp-row--cutoff' : ''} ${isLive ? 'tp-row--live' : ''}`}
                 >
                   <td className="tp-rank">{idx + 1}</td>
                   <td className="tp-group">Group {group}</td>
@@ -69,6 +74,12 @@ export function ThirdPlaceRankings({ standings }: Props) {
                       onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
                     />
                     <span>{entry.team.shortName || entry.team.name}</span>
+                    {isLive && (
+                      <span className="live-badge" title={liveScore}>
+                        <span className="live-dot" />
+                        LIVE
+                      </span>
+                    )}
                   </td>
                   <td>{entry.playedGames}</td>
                   <td>{entry.won}</td>
