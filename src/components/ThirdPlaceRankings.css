@@ -1,0 +1,119 @@
+.tp-section {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 1.5rem 3rem;
+}
+
+.tp-table-wrap {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.tp-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  color: var(--text-primary);
+}
+
+.tp-table thead tr {
+  background: var(--navy-700);
+}
+
+.tp-table th {
+  padding: 8px 10px;
+  text-align: center;
+  font-family: var(--font-condensed);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  white-space: nowrap;
+  border-bottom: 1px solid var(--border);
+}
+
+.tp-table th.tp-team,
+.tp-table th.tp-group {
+  text-align: left;
+}
+
+.tp-table td {
+  padding: 7px 10px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.tp-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.tp-table td.tp-team-cell,
+.tp-table td.tp-group {
+  text-align: left;
+}
+
+/* Rank & group cols */
+.tp-rank { width: 32px; font-weight: 600; color: var(--text-muted); }
+.tp-group { font-size: 12px; color: var(--text-muted); white-space: nowrap; }
+.tp-pts { font-weight: 700; color: var(--gold-400); }
+
+/* Team cell */
+.tp-team-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 140px;
+}
+
+.tp-crest {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* Row states */
+.tp-row--qualifies {
+  background: rgba(45, 198, 122, 0.05);
+}
+
+.tp-row--qualifies:hover {
+  background: rgba(45, 198, 122, 0.1);
+}
+
+.tp-row--out {
+  opacity: 0.55;
+}
+
+/* Bold border after rank 8 (the cut-off) */
+.tp-row--cutoff td {
+  border-bottom: 2px solid rgba(45, 198, 122, 0.4);
+}
+
+/* GD colours (reuse from Standings) */
+.gd--pos { color: var(--finished-green); }
+.gd--neg { color: var(--live-red); }
+
+/* Legend */
+.tp-legend {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 12px;
+  font-size: 11px;
+  color: var(--text-dim);
+  flex-wrap: wrap;
+}
+
+.legend-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+.legend-dot--best3rd { background: var(--finished-green); }

@@ -2,13 +2,8 @@ name: Refresh live data
 
 on:
   schedule:
-    # Staggered every ~10 min — GitHub's */5 cron is unreliable under load
-    - cron: '0 * * * *'
-    - cron: '10 * * * *'
-    - cron: '20 * * * *'
-    - cron: '30 * * * *'
-    - cron: '40 * * * *'
-    - cron: '50 * * * *'
+    # Every 10 min, 06:00–20:00 UTC only (= 12pm–2am BST, when matches are played)
+    - cron: '0,10,20,30,40,50 6-20 * * *'
   workflow_dispatch:
 
 permissions:
