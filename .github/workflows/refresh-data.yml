@@ -2,8 +2,9 @@ name: Refresh live data
 
 on:
   schedule:
-    # Every 10 min, 06:00–20:00 UTC only (= 12pm–2am BST, when matches are played)
-    - cron: '0,10,20,30,40,50 6-20 * * *'
+    # Every 10 min, 12pm–2am EDT (= 16:00–06:00 UTC, spans midnight)
+    - cron: '0,10,20,30,40,50 16-23 * * *'
+    - cron: '0,10,20,30,40,50 0-6 * * *'
   workflow_dispatch:
 
 permissions:
