@@ -21,13 +21,13 @@ export default function App() {
   const { data: meta } = useMeta();
   const { data, isLoading, isError, error } = useBracket(standings ?? null);
 
-  // Overlay live match scores onto finalized standings
-  const { standings: liveStandings, liveTeamIds, liveScores } = useMemo(
-    () => standings && groupMatches
-      ? computeLiveStandings(standings, groupMatches)
-      : { standings: standings ?? {}, liveTeamIds: new Set<number>(), liveScores: new Map<number, string>() },
-    [standings, groupMatches]
-  );
+  // Detect which teams are currently in a live match (for the LIVE badge only).
+  // Do NOT overlay scores — the standings API already updates in real time.
+  const { liveTeamIds, liveScores } = useMemo(() => {
+    if (!groupMatches) return { liveTeamIds: new Set<number>(), liveScores: new Map<number, string>() };
+    const { liveTeamIds, liveScores } = computeLiveStandings(standings ?? {}, groupMatches);
+    return { liveTeamIds, liveScores };
+  }, [standings, groupMatches]);
 
   const [simulateMode, setSimulateMode] = useState(false);
   const [simPicks, setSimPicks] = useState<SimPicks>({});
@@ -116,10 +116,10 @@ export default function App() {
               thirdPlace={data.thirdPlace ?? null}
             />
             {standings && Object.keys(standings).length > 0 && (
-              <Standings standings={liveStandings} liveTeamIds={liveTeamIds} liveScores={liveScores} />
+              <Standings standings={standings} liveTeamIds={liveTeamIds} liveScores={liveScores} />
             )}
             {standings && Object.keys(standings).length > 0 && (
-              <ThirdPlaceRankings standings={liveStandings} liveTeamIds={liveTeamIds} liveScores={liveScores} />
+              <ThirdPlaceRankings standings={standings} liveTeamIds={liveTeamIds} liveScores={liveScores} />
             )}
           </>
         )}
